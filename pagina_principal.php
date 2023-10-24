@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión. Si no, redirigirlo al formulario de inicio de sesión.
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
@@ -27,8 +26,8 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         .card-img {
-            width: 100%; /* Ajusta el ancho según tus necesidades */
-            height: 200px; /* Ajusta la altura según tus necesidades */
+            width: 100%; 
+            height: 200px; 
             object-fit: cover;
         }
 
