@@ -1,34 +1,30 @@
 <?php
 session_start();
-require_once('conexion.php'); // Archivo de conexión a la base de datos
+require_once('conexion.php'); 
 
 if (isset($_POST['realizar_pedido'])) {
     $cedula_cliente = $_POST['cedula_cliente'];
     $cantidad_bote = $_POST['cantidad_bote'];
 
-    // Obtener la fecha actual
     date_default_timezone_set('America/Caracas');
     $fecha_llenado = date('Y-m-d H:i:s');
 
-    // Consulta SQL para insertar el pedido en la base de datos
     $query = "INSERT INTO pedidos (cedula_cliente, cantidad_bote, fecha_llenado) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("iis", $cedula_cliente, $cantidad_bote, $fecha_llenado);
 
     if ($stmt->execute()) {
-        $response = "1"; // Pedido realizado con éxito
+        $response = "1"; 
     } else {
         $response = "Error al realizar el pedido: " . $conn->error;
     }
 
     $stmt->close();
 
-    // Devolver la respuesta como JSON
     echo json_encode(array("response" => $response));
     exit;
 }
 
-// Consulta SQL para obtener la lista de clientes
 $client_query = "SELECT cedula, nombre, apellido FROM cliente";
 $result = $conn->query($client_query);
 
