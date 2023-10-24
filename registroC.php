@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Incluye el archivo de conexión a la base de datos
 require_once "conexion.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,29 +9,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellido = $_POST["apellido"];
     $zona_pais = $_POST["zona_pais"];
 
-    // Validaciones (puedes agregar más según tus necesidades)
     if (empty($cedula) || empty($nombre) || empty($apellido) || empty($zona_pais)) {
         echo "Todos los campos son obligatorios.";
         exit;
     }
 
-    // Consulta SQL para insertar el cliente en la base de datos
     $sql = "INSERT INTO cliente (cedula, nombre, apellido, zona_pais) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $cedula, $nombre, $apellido, $zona_pais);
 
     if ($stmt->execute()) {
-        // Cliente registrado con éxito
-        echo "1"; // Respuesta exitosa
+        echo "1"; 
     } else {
-        echo "Hubo un error al registrar el cliente."; // Respuesta de error
+        echo "Hubo un error al registrar el cliente."; 
     }
 
     $stmt->close();
     exit;
 }
 
-// Cierra la conexión a la base de datos
 $conn->close();
 ?>
 
